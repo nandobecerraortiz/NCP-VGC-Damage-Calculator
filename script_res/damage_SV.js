@@ -1,4 +1,5 @@
-/* Damage calculation for the Generation IX games: Scarlet and Violet;
+/* Damage calculation for the side game: Champions;
+ * for the Generation IX games: Scarlet, Violet, and Legends: Z-A;
  * for the Generation VIII games: Sword, Shield, Brilliant Diamond, and Shining Pearl;
  * and for the Generation VII games: Sun, Moon, Ultra Sun, and Ultra Moon */
 
@@ -60,6 +61,10 @@ function CALCULATE_ALL_MOVES_SV(p1, p2, field) {
     for (var i = 0; i < 4; i++) {
         results[0][i] = GET_DAMAGE_SV(p1, p2, p1.moves[i], side1);
         results[1][i] = GET_DAMAGE_SV(p2, p1, p2.moves[i], side2);
+        if (gen == 9.5) {
+            results[0][i].cooldown = getMoveCooldown(p1, p1.moves[i]);
+            results[1][i].cooldown = getMoveCooldown(p2, p2.moves[i]);
+        }
     }
     return results;
 }
@@ -84,7 +89,7 @@ function GET_DAMAGE_SV(attacker, defender, move, field) {
         [move, moveDescName] = NaturePower(move, field, moveDescName);
 
     if (move.isZ || move.isSignatureZ)
-        [move, isQuarteredByProtect, moveDescName] = ZMoves(move, field, attacker, isQuarteredByProtect, moveDescName);
+        [move, moveDescName] = ZMoves(move, field, attacker, moveDescName);
 
     //Needs to be after the Z-move check since Light That Burns The Sky can change category
     if (usesPhysicalAttack(attacker, defender, move)) {
@@ -105,6 +110,8 @@ function GET_DAMAGE_SV(attacker, defender, move, field) {
         "defenderName": defender_name
     };
 
+    isQuarteredByProtect = setIsQuarteredByProtect(attacker, defender, field, move, description);
+
     addLevelDesc(attacker, defender, description);
 
     if (move.bp === 0 || move.category === "Status") {
@@ -119,20 +126,15 @@ function GET_DAMAGE_SV(attacker, defender, move, field) {
 
     var isCritical = critMove(move, defAbility);
 
-    var ateIzeAbility = ATE_IZE_ABILITIES.indexOf(attacker.ability);    //Confirms abilities like Normalize and Pixilate but not Liquid Voice
     var ateIzeBoosted;
-    if (!move.isZ && (ateIzeAbility !== -1 || attacker.ability == "Liquid Voice")
-        && ['Hidden Power', 'Weather Ball', 'Natural Gift', 'Judgement', 'Techno Blast', 'Revelation Dance', 'Multi-Attack', 'Terrain Pulse'].indexOf(move.name) === -1) {
-        [move, description, ateIzeBoosted] = ateIzeTypeChange(move, attacker, description);
+    if (!move.isZ && (TYPE_CHANGE_BOOST_ABILITIES.includes(attacker.ability) || attacker.ability == "Liquid Voice")
+        && !(['Hidden Power', 'Weather Ball', 'Natural Gift', 'Judgement', 'Techno Blast', 'Revelation Dance', 'Multi-Attack', 'Terrain Pulse'].includes(move.name))) {
+        [move, description, ateIzeBoosted] = checkAbilityTypeChange(move, attacker, description);
     }
 
-    var typeEffect1 = getMoveEffectiveness(move, defender.type1, defender.type2, description, field.isForesight, ["Scrappy", "Mind's Eye"].indexOf(attacker.ability) != -1 ? attacker.ability : false, field.isGravity, defender.item, field.weather === "Strong Winds", defender.isTerastalize);
-    var typeEffect2 = defender.type2 && defender.type2 !== defender.type1 && move.type !== 'Stellar' ? getMoveEffectiveness(move, defender.type2, defender.type1, description, field.isForesight, ["Scrappy", "Mind's Eye"].indexOf(attacker.ability) != -1 ? attacker.ability : false, field.isGravity, defender.item, field.weather === "Strong Winds", defender.isTerastalize) : 1;
-    var typeEffectiveness = typeEffect1 * typeEffect2;
+    var typeEffectiveness = getMoveEffectiveness(move, defender.type1, defender.type2, description, field.isForesight, ["Scrappy", "Mind's Eye"].includes(attacker.ability) ? attacker.ability : false, field.isGravity, defender.item, field.weather === "Strong Winds", defender.isTerastalize, defAbility === 'Tera Shell' && defender.curHP === defender.maxHP);
     immuneBuildDesc = immunityChecks(move, attacker, defender, field, description, defAbility, typeEffectiveness);
     if (immuneBuildDesc !== -1) return immuneBuildDesc;
-    typeEffectiveness = checkTeraShell(defAbility === 'Tera Shell' && defender.curHP === defender.maxHP, description, typeEffectiveness);
-    if (gen == 9.5) typeEffectiveness = additionalTypeEffectModsLegendsZA(move, typeEffectiveness, description);
 
     getHPInfo(description, defender);
 

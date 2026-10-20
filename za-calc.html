@@ -91,6 +91,8 @@
                 <div class="small-text">
                     <span id="damageValues">(If you see this message for more than a few seconds, try enabling JavaScript. If you have that enabled, try deleting your cookies. Otherwise, I won't be able to help you unless you send a screenshot of your browser console [Ctrl+Shift+I on Google Chrome].)</span>
                     <br />
+                    <span id="cooldownText"></span>
+                    <br />
                     <span id="customModValues" style="display: none;">(If this is seen then I think I did something wrong)</span>
                 </div>
             </div>
@@ -110,9 +112,9 @@
                     </div>
                     <div class="info-group">
                         <!--<div class="sidebarTeam" id="tL" style="float:right;">
-                            <input class="namet" value="Untitled" style="width:100px;"/>
-                            <button class="renamet" id="renameL" type="button" title="Rename the current team.">Rename</button>
-                        </div>-->
+                        <input class="namet" value="Untitled" style="width:100px;"/>
+                        <button class="renamet" id="renameL" type="button" title="Rename the current team.">Rename</button>
+                    </div>-->
                         <div>
                             <label>Type</label>
                             <select class="type1 terrain-trigger calc-trigger"></select>
@@ -284,7 +286,6 @@
                         <select class="move-opponent calc-trigger hide"><option value="1">Move 1</option><option value="2">Move 2</option><option value="3">Move 3</option><option value="4">Move 4</option></select>
                         <input class="move-stellar calc-trigger btn-input hide" type="checkbox" id="stellarL4" checked="checked" /><label class="stellar-btn btn xx-btn" for="stellarL4" title="Is this the first time using a move of this type after Terastalizing?">1st Use</label>
                     </div>
-                    <input class="glaive-rush calc-trigger hide" type="checkbox" id="glaiveL" title="Apply double damage from using Glaive Rush?" />
                     <div class="info-group">
                         <input type="text" class="setCalc" id="setName1" style="width: 25%" value="My Calc Set">
                         <button type="button" onclick="runSaveCalc(1)">Save Calc Set</button>
@@ -393,6 +394,14 @@
                         <div class="right" title="Is this Pokémon protected by Reflect and/or Light Screen?">
                             <input class="btn-input calc-trigger" type="checkbox" id="reflectR" /><label class="btn btn-left" for="reflectR">Reflect</label>
                             <input class="btn-input calc-trigger" type="checkbox" id="lightScreenR" /><label class="btn btn-wide btn-right" for="lightScreenR">Light Screen</label>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <div class="left" title="Is Charge active for this Pokémon?">
+                            <input class="btn-input calc-trigger" type="checkbox" id="chargeL" /><label class="btn" for="chargeL">Charge</label>
+                        </div>
+                        <div class="right" title="Is Charge active for this Pokémon?">
+                            <input class="btn-input calc-trigger" type="checkbox" id="chargeR" /><label class="btn" for="chargeR">Charge</label>
                         </div>
                     </div>
                     <div class="btn-group gen-specific g8">
@@ -660,7 +669,6 @@
                         <select class="move-opponent calc-trigger hide"><option value="1">Move 1</option><option value="2">Move 2</option><option value="3">Move 3</option><option value="4">Move 4</option></select>
                         <input class="move-stellar calc-trigger btn-input hide" type="checkbox" id="stellarR4" checked="checked" /><label class="stellar-btn btn xx-btn" for="stellarR4" title="Is this the first time using a move of this type after Terastalizing?">1st Use</label>
                     </div>
-                    <input class="glaive-rush calc-trigger hide" type="checkbox" id="glaiveR" title="Apply double damage from using Glaive Rush?" />
                     <div class="info-group">
                         <input type="text" class="setCalc" id="setName2" style="width: 25%" value="My Calc Set">
                         <button type="button" onclick="runSaveCalc(2)">Save Calc Set</button>
@@ -679,45 +687,29 @@
         <div style="display:inline-block;width:728px;height:30px" />
         <!-- Damage Calc Ad (PROBABLY WILL REMAIN UNUSED) -->
         <!--<ins class="adsbygoogle"
-             style="display:inline-block;width:728px;height:90px"
-             data-ad-client="ca-pub-7571541875475494"
-             data-ad-slot="3642617298"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>-->
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-7571541875475494"
+         data-ad-slot="3642617298"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>-->
 
         <script src="jquery-3.1.1.min.js"></script>
         <script type="text/javascript" src="script_res/switch_mode.js"></script>
         <script type="text/javascript" src="script_res/select2.min.js"></script>
         <script type="text/javascript" src="script_res/pokedex.js"></script>
-        <script type="text/javascript" src="script_res/setdex_showdown.js"></script>
-        <script type="text/javascript" src="script_res/setdex_globalLink.js"></script>
-        <script type="text/javascript" src="script_res/setdex_nuggetBridge.js"></script>
-        <script type="text/javascript" src="script_res/setdex_tt2017.js" id="TTScript"></script>
-        <script type="text/javascript" src="script_res/setdex_tt2018.js" id="TTScript"></script>
-        <script type="text/javascript" src="script_res/setdex_tt2019.js" id="TTScript"></script>
-        <script type="text/javascript" src="script_res/setdex_tt2020.js" id="TTScript"></script>
-        <script type="text/javascript" src="script_res/setdex_ncp-g5.js" id="NCPScript"></script>
-        <script type="text/javascript" src="script_res/setdex_ncp-g7.js" id="NCPScript"></script>
-        <script type="text/javascript" src="script_res/setdex_ncp-g8.js" id="NCPScript"></script>
-        <script type="text/javascript" src="script_res/setdex_ncp-g9.js" id="NCPScript"></script>
-        <script type="text/javascript" src="script_res/setdex_smogon.js" id="SmogScript"></script>
+        <script type="text/javascript" src="script_res/setdex_dynamic-lgpe-za.js"></script>
         <script type="text/javascript" src="script_res/setdex_dynamic.js"></script>
         <script type="text/javascript" src="script_res/setdex_custom.js"></script>
         <script type="text/javascript" src="script_res/stat_data.js"></script>
         <script type="text/javascript" src="script_res/type_data.js"></script>
         <script type="text/javascript" src="script_res/nature_data.js"></script>
-        <script type="text/javascript" src="script_res/ability_data.js"></script>
         <script type="text/javascript" src="script_res/item_data.js"></script>
         <script type="text/javascript" src="script_res/move_data.js"></script>
+        <script type="text/javascript" src="script_res/move_data_za.js"></script>
         <script type="text/javascript" src="script_res/ap_calc.js"></script>
         <script type="text/javascript" src="script_res/damage_MASTER.js"></script>
         <script type="text/javascript" src="script_res/damage_SV.js"></script>
-        <script type="text/javascript" src="script_res/damage_xy.js"></script>
-        <script type="text/javascript" src="script_res/damage_dpp.js"></script>
-        <script type="text/javascript" src="script_res/damage_rse.js"></script>
-        <script type="text/javascript" src="script_res/damage_gsc.js"></script>
-        <script type="text/javascript" src="script_res/damage_rby.js"></script>
         <script type="text/javascript" src="script_res/ko_chance.js"></script>
         <script type="text/javascript" src="script_res/statuscalc.js"></script>
         <script type="text/javascript" src="afd_res/spamton.js"></script>
@@ -725,5 +717,6 @@
         <script type="text/javascript" src="afd_res/pokedex_afd24.js"></script>
         <script type="text/javascript" src="afd_res/setdex_afd24.js"></script>
         <script type="text/javascript" src="script_res/sidebars.js"></script>
+        <script type="text/javascript" src="script_res/cooldown_za.js"></script>
     </body>
 </html>

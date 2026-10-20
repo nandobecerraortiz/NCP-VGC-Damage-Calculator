@@ -15154,9 +15154,8 @@ var POKEDEX_SS = $.extend(true, {}, POKEDEX_SS_NATDEX, {
     "Mega Audio", "Mega Diancie", "Ultra Necrozma"
 ].forEach(e => delete POKEDEX_SS[e]);
 
-
-var POKEDEX_LA = $.extend(true, {}, POKEDEX_SS_NATDEX, {
-    //EVIOLITE ELIGIBILITY CHANGES
+var POKEDEX_SV_NATDEX = $.extend(true, {}, POKEDEX_SS_NATDEX, {
+    //LA Eviolite Eligibility Changes
     "Stantler": { "canEvolve": true, },
     "Ursaring": { "canEvolve": true, },
 
@@ -15559,10 +15558,8 @@ var POKEDEX_LA = $.extend(true, {}, POKEDEX_SS_NATDEX, {
         "w": 48.0,
         "ab": "Overcoat",
     },
-});
 
-var POKEDEX_SV_NATDEX = $.extend(true, {}, POKEDEX_LA, {
-    //Past Pokemon Changes
+    //SV Past Pokemon Changes
     "Primeape": { "canEvolve": true, },
     "Dunsparce": { "canEvolve": true, },
     "Girafarig": { "canEvolve": true, },
@@ -17006,7 +17003,7 @@ var POKEDEX_SV_NATDEX = $.extend(true, {}, POKEDEX_LA, {
         "ab": "Rattled",
         "canEvolve": true,
     },
-    "Gimmighoul-Roam": {
+    "Gimmighoul-Roaming": {
         "t1": "Ghost",
         "bs": {
             "hp": 45,
@@ -17540,7 +17537,7 @@ var POKEDEX_SV = {};
     'Palkia-Origin', 'Giratina-Origin', 'Samurott-Hisui', 'Lilligant-Hisui', 'Basculin-White-Striped', 'Zorua-Hisui', 'Zoroark-Hisui', 'Braviary-Hisui', 'Tornadus-Therian', 'Thundurus-Therian', 'Landorus-Therian',
     'Meloetta-Pirouette', 'Sliggoo-Hisui', 'Goodra-Hisui', 'Avalugg-Hisui', 'Decidueye-Hisui', 'Oricorio-Pom-Pom', "Oricorio-Pa'u", 'Oricorio-Sensu', 'Lycanroc-Midnight', 'Lycanroc-Dusk',
     'Eiscue-Noice', 'Indeedee-F', 'Zacian-Crowned', 'Zamazenta-Crowned', 'Urshifu-Rapid Strike', 'Calyrex-Ice Rider', 'Calyrex-Shadow Rider', 'Basculegion-F', 'Enamorus-Therian', 'Oinkologne-F',
-    'Dudunsparce-Three-Segment', 'Palafin-Hero', 'Maushold-Four', 'Gimmighoul-Roam', 'Hoopa-Unbound', 'Wooper-Paldea',
+    'Dudunsparce-Three-Segment', 'Palafin-Hero', 'Maushold-Four', 'Gimmighoul-Roaming', 'Hoopa-Unbound', 'Wooper-Paldea',
     //Teal Mask DLC Pokemon
     'Ekans', 'Arbok', 'Sandshrew', 'Sandslash', 'Clefairy', 'Clefable', 'Vulpix', 'Ninetales', 'Poliwag', 'Poliwhirl', 'Poliwrath', 'Bellsprout', 'Weepinbell', 'Victreebel',
     'Geodude', 'Graveler', 'Golem', 'Koffing', 'Weezing', 'Snorlax', 'Sentret', 'Furret', 'Hoothoot', 'Noctowl', 'Spinarak', 'Ariados', 'Cleffa', 'Politoed', 'Aipom',
@@ -17606,7 +17603,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
     "Victreebel": { "formes": ["Victreebel", "Mega Victreebel"] },
     "Starmie": { "formes": ["Starmie", "Mega Starmie"] },
     "Dragonite": { "formes": ["Dragonite", "Mega Dragonite"] },
-    "Meganimum": { "formes": ["Meganium", "Mega Meganium"] },
+    "Meganium": { "formes": ["Meganium", "Mega Meganium"] },
     "Feraligatr": { "formes": ["Feraligatr", "Mega Feraligatr"] },
     "Skarmory": { "formes": ["Skarmory", "Mega Skarmory"] },
     "Froslass": { "formes": ["Froslass", "Mega Froslass"] },
@@ -17627,12 +17624,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
     "Zygarde": { "formes": ["Zygarde", 'Zygarde-Complete', "Mega Zygarde"] },
     "Zygarde-10%": { "formes": ["Zygarde-10%", 'Zygarde-Complete', "Mega Zygarde"] },
     "Drampa": { "formes": ["Drampa", "Mega Drampa"] },
-    "Falinks": { "formes": ["Falnks", "Mega Falinks"] },
-    //stat changes
-    "Meditite": { "at": 56 },
-    "Medicham": { "at": 84 },
-    "Mega Mawile": { "at": 147 },
-    "Mega Medicham": {"at": 140},
+    "Falinks": { "formes": ["Falinks", "Mega Falinks"] },
     //new Pokemon
     "Mega Clefable": {
         "t1": "Fairy",
@@ -17646,6 +17638,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 70,
         },
         "w": 42.3,
+        "ab": "Magic Bounce",
         "isAlternateForme": true,
     },
     "Mega Victreebel": {
@@ -17660,6 +17653,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 70,
         },
         "w": 125.5,
+        "ab": "Innards Out",
         "isAlternateForme": true,
     },
     "Mega Starmie": {
@@ -17667,13 +17661,14 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
         "t2": "Psychic",
         "bs": {
             "hp": 60,
-            "at": 140,
+            "at": 100,
             "df": 105,
             "sa": 130,
             "sd": 105,
             "sp": 120,
         },
         "w": 80,
+        "ab": "Huge Power",
         "isAlternateForme": true,
     },
     "Mega Dragonite": {
@@ -17688,6 +17683,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 100,
         },
         "w": 290,
+        "ab": "Multiscale",
         "isAlternateForme": true,
     },
     "Mega Meganium": {
@@ -17702,6 +17698,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 80,
         },
         "w": 201,
+        "ab": "Mega Sol",
         "isAlternateForme": true,
     },
     "Mega Feraligatr": {
@@ -17716,6 +17713,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 78,
         },
         "w": 108.8,
+        "ab": "Dragonize",
         "isAlternateForme": true,
     },
     "Mega Skarmory": {
@@ -17730,6 +17728,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 110,
         },
         "w": 40.4,
+        "ab": "Stalwart",
         "isAlternateForme": true,
     },
     "Mega Froslass": {
@@ -17744,6 +17743,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 120,
         },
         "w": 29.6,
+        "ab": "Snow Warning",
         "isAlternateForme": true,
     },
     "Mega Emboar": {
@@ -17758,6 +17758,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 75,
         },
         "w": 180.3,
+        "ab": "Mold Breaker",
         "isAlternateForme": true,
     },
     "Mega Excadrill": {
@@ -17772,6 +17773,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 103,
         },
         "w": 60,
+        "ab": "Piercing Drill",
         "isAlternateForme": true,
     },
     "Mega Scolipede": {
@@ -17786,6 +17788,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 62,
         },
         "w": 230.5,
+        "ab": "Shell Armor",
         "isAlternateForme": true,
     },
     "Mega Scrafty": {
@@ -17800,6 +17803,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 68,
         },
         "w": 31,
+        "ab": "Intimidate",
         "isAlternateForme": true,
     },
     "Mega Eelektross": {
@@ -17813,11 +17817,12 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 80,
         },
         "w": 180,
+        "ab": "Eelevate",
         "isAlternateForme": true,
     },
     "Mega Chandelure": {
-        "t1": "Fire",
-        "t2": "Ghost",
+        "t1": "Ghost",
+        "t2": "Fire",
         "bs": {
             "hp": 60,
             "at": 75,
@@ -17827,6 +17832,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 90,
         },
         "w": 69.6,
+        "ab": "Infiltrator",
         "isAlternateForme": true,
     },
     "Mega Chesnaught": {
@@ -17841,6 +17847,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 44,
         },
         "w": 90,
+        "ab": "Bulletproof",
         "isAlternateForme": true,
     },
     "Mega Delphox": {
@@ -17855,6 +17862,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 134,
         },
         "w": 39,
+        "ab": "Levitate",
         "isAlternateForme": true,
     },
     "Mega Greninja": {
@@ -17869,6 +17877,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 142,
         },
         "w": 40,
+        "ab": "Protean",
         "isAlternateForme": true,
     },
     "Mega Pyroar": {
@@ -17883,6 +17892,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 126,
         },
         "w": 93.3,
+        "ab": "Fire Mane",
         "isAlternateForme": true,
     },
     "Floette-Eternal": {
@@ -17910,6 +17920,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 102,
         },
         "w": 100.8,
+        "ab": "Fairy Aura",
         "isAlternateForme": true,
     },
     "Mega Malamar": {
@@ -17924,6 +17935,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 88,
         },
         "w": 69.8,
+        "ab": "Contrary",
         "isAlternateForme": true,
     },
     "Mega Barbaracle": {
@@ -17938,6 +17950,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 88,
         },
         "w": 100,
+        "ab": "Tough Claws",
         "isAlternateForme": true,
     },
     "Mega Dragalge": {
@@ -17952,6 +17965,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 44,
         },
         "w": 100.3,
+        "ab": "Regenerator",
         "isAlternateForme": true,
     },
     "Mega Hawlucha": {
@@ -17966,6 +17980,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 118,
         },
         "w": 25,
+        "ab": "No Guard",
         "isAlternateForme": true,
     },
     "Mega Zygarde": {
@@ -17994,6 +18009,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 36,
         },
         "w": 240.5,
+        "ab": "Berserk",
         "isAlternateForme": true,
     },
     "Mega Falinks": {
@@ -18007,6 +18023,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 100,
         },
         "w": 99,
+        "ab": "Defiant",
         "isAlternateForme": true,
     },
 
@@ -18022,7 +18039,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
     "Darkrai": { "formes": ["Darkrai", "Mega Darkrai"] },
     "Golurk": { "formes": ["Golurk", "Mega Golurk"] },
     "Meowstic": { "formes": ["Meowstic", "Mega Meowstic"] },
-    "Meowstic-F": { "formes": ["Meowstic-F", "Mega Meowstic-F"] },
+    "Meowstic-F": { "formes": ["Meowstic-F", "Mega Meowstic"] },
     "Crabominable": { "formes": ["Crabominable", "Mega Crabominable"] },
     "Golisopod": { "formes": ["Golisopod", "Mega Golisopod"] },
     "Magearna": { "formes": ["Magearna", "Mega Magearna"] },
@@ -18043,6 +18060,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 110,
         },
         "w": 38,
+        "ab":"Electric Surge",
         "isAlternateForme": true,
     },
     "Mega Raichu Y": {
@@ -18056,6 +18074,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 130,
         },
         "w": 26,
+        "ab":"No Guard",
         "isAlternateForme": true,
     },
     "Mega Chimecho": {
@@ -18070,6 +18089,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 65,
         },
         "w": 8,
+        "ab": "Levitate",
         "isAlternateForme": true,
     },
     "Mega Absol Z": {
@@ -18084,6 +18104,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 151,
         },
         "w": 49,
+        "ab": "Sharpness",
         "isAlternateForme": true,
     },
     "Mega Staraptor": {
@@ -18098,6 +18119,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 110,
         },
         "w": 50,
+        "ab": "Contrary",
         "isAlternateForme": true,
     },
     "Mega Garchomp Z": {
@@ -18111,6 +18133,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 151,
         },
         "w": 99,
+        "ab": "Levitate",
         "isAlternateForme": true,
     },
     "Mega Lucario Z": {
@@ -18125,6 +18148,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 151,
         },
         "w": 49.4,
+        "ab": "Aura Guard",
         "isAlternateForme": true,
     },
     "Mega Heatran": {
@@ -18166,6 +18190,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 55,
         },
         "w": 330,
+        "ab": "Unseen Fist",
         "isAlternateForme": true,
     },
     "Mega Meowstic": {
@@ -18179,19 +18204,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 124,
         },
         "w": 10.1,
-        "isAlternateForme": true,
-    },
-    "Mega Meowstic-F": {
-        "t1": "Psychic",
-        "bs": {
-            "hp": 74,
-            "at": 48,
-            "df": 76,
-            "sa": 143,
-            "sd": 101,
-            "sp": 124,
-        },
-        "w": 10.1,
+        "ab": "Trace",
         "isAlternateForme": true,
     },
     "Mega Crabominable": {
@@ -18206,6 +18219,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 33,
         },
         "w": 252.8,
+        "ab": "Iron Fist",
         "isAlternateForme": true,
     },
     "Mega Golisopod": {
@@ -18220,6 +18234,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 40,
         },
         "w": 148,
+        "ab": "Tough Claws",
         "isAlternateForme": true,
     },
     "Mega Magearna": {
@@ -18261,6 +18276,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 75,
         },
         "w": 22,
+        "ab": "Spicy Spray",
         "isAlternateForme": true,
     },
     "Mega Glimmora": {
@@ -18275,6 +18291,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 101,
         },
         "w": 77,
+        "ab": "Adaptability",
         "isAlternateForme": true,
     },
     "Mega Tatsugiri": {
@@ -18303,6 +18320,7 @@ var POKEDEX_ZA_NATDEX = $.extend(true, {}, POKEDEX_SV_NATDEX, {
             "sp": 87,
         },
         "w": 315,
+        "ab": "Thermal Exchange",
         "isAlternateForme": true,
     },
 });
@@ -18354,9 +18372,69 @@ var POKEDEX_ZA = {};
     'Mr. Mime', 'Mr. Rime', 'Foongus', 'Amoonguss', 'Heatran', 'Volcanion', 'Cobalion', 'Terrakion', 'Virizion', 'Keldeo', 'Meloetta', 'Genesect',
     'Hoopa', 'Marshadow', 'Meltan', 'Melmetal', 'Darkrai', 'Latias', 'Latios', 'Kyogre', 'Groudon', 'Rayquaza', 'Magearna', 'Zeraora',
     //Forms for Mega Dimension Pokemon
-    'Mega Raichu X', 'Mega Raichu Y', 'Mega Absol Z', 'Mega Garchomp Z', 'Mega Lucario Z', 'Mega Meowstic', 'Mega Meowstic-F', 'Meowth-Alola', 'Meowth-Galar', 'Persian-Alola', "Farfetch'd-Galar",
-    'Marowak-Alola', 'Mega Scovillain', 'Mega Glimmora', 'Rotom-Heat', 'Rotom-Wash', 'Rotom-Frost', 'Rotom-Fan', 'Rotom-Mow', 'Mega Tatsugiri', 'Mega Baxcalibur',
+    'Mega Raichu X', 'Mega Raichu Y', 'Mega Absol Z', 'Mega Garchomp Z', 'Mega Lucario Z', 'Mega Meowstic', 'Meowth-Alola', 'Meowth-Galar', 'Persian-Alola', "Farfetch'd-Galar",
+    'Marowak-Alola', 'Mega Scovillain', 'Mega Glimmora', 'Rotom-Heat', 'Rotom-Wash', 'Rotom-Frost', 'Rotom-Fan', 'Rotom-Mow', 'Mega Tatsugiri', 'Mega Baxcalibur', 'Gimmighoul-Roaming', 
     'Qwilfish-Hisui', 'Mega Sceptile', 'Mega Blaziken', 'Mega Swampert', 'Mega Chimecho', 'Indeedee-F', 'Yamask-Galar', 'Mega Golisopod', 'Morpeko-Hangry', 'Mega Golurk',
     'Mega Staraptor', 'Mega Crabominable', 'Mr. Mime-Galar', 'Mega Heatran', 'Meloetta-Pirouette', 'Hoopa-Unbound', 'Mega Darkrai', 'Mega Latias', 'Mega Latios',
     'Primal Kyogre', 'Primal Groudon', 'Mega Rayquaza', 'Mega Magearna', 'Mega Zeraora',
 ].forEach(e => POKEDEX_ZA[e] = POKEDEX_ZA_NATDEX[e]);
+
+//performs deep copy; necessary to preserve stat data for nat dex
+POKEDEX_ZA = $.extend(true, {}, POKEDEX_ZA, {
+    'Meditite': { 'bs': { 'at': 56 } },
+    'Medicham': { 'bs': { 'at': 84 } },
+    'Mega Mawile': { 'bs': { 'at': 147 } },
+    'Mega Medicham': { 'bs': { 'at': 140 } },
+    'Mega Starmie': { 'bs': { 'at': 140 } },
+});
+
+var POKEDEX_CHAMPIONS = {};
+[
+    //Pokemon available from launch of Champions
+    'Venusaur', 'Charizard', 'Blastoise', 'Beedrill', 'Pidgeot', 'Arbok', 'Pikachu', 'Raichu', 'Clefable', 'Ninetales',
+    'Arcanine', 'Alakazam', 'Machamp', 'Victreebel', 'Slowbro', 'Gengar', 'Kangaskhan', 'Starmie', 'Pinsir',
+    'Tauros', 'Gyarados', 'Ditto', 'Vaporeon', 'Jolteon', 'Flareon', 'Aerodactyl', 'Snorlax',
+    'Dragonite', 'Meganium', 'Typhlosion', 'Feraligatr', 'Ariados', 'Ampharos', 'Azumarill', 'Politoed', 'Espeon',
+    'Umbreon', 'Slowking', 'Forretress', 'Steelix', 'Scizor', 'Heracross', 'Skarmory', 'Houndoom', 'Tyranitar',
+    'Pelipper', 'Gardevoir', 'Sableye', 'Aggron', 'Medicham', 'Manectric', 'Sharpedo', 'Camerupt', 'Torkoal', 'Altaria', 'Milotic', 'Castform',
+    'Banette', 'Chimecho', 'Absol', 'Glalie', 'Torterra', 'Infernape', 'Empoleon', 'Luxray', 'Roserade', 'Rampardos', 'Bastiodon', 'Lopunny', 'Spiritomb', 'Garchomp', 'Lucario',
+    'Hippowdon', 'Toxicroak', 'Abomasnow', 'Weavile', 'Rhyperior', 'Leafeon', 'Glaceon', 'Gliscor', 'Mamoswine',
+    'Gallade', 'Froslass', 'Rotom', 'Serperior', 'Emboar', 'Samurott', 'Watchog', 'Liepard', 'Simisage', 'Simisear', 'Simipour', 'Excadrill', 'Audino',
+    'Conkeldurr', 'Whimsicott', 'Krookodile', 'Cofagrigus', 'Garbodor', 'Zoroark', 'Reuniclus', 'Vanilluxe', 'Emolga', 'Chandelure', 'Beartic',
+    'Stunfisk', 'Golurk', 'Hydreigon', 'Volcarona', 'Chesnaught', 'Delphox', 'Greninja', 'Diggersby',
+    'Talonflame', 'Vivillon', 'Floette-Eternal', 'Florges', 'Pangoro', 'Furfrou', 'Meowstic', 'Aegislash', 'Aromatisse', 'Slurpuff', 'Clawitzer', 'Heliolisk', 'Tyrantrum',
+    'Aurorus', 'Sylveon', 'Hawlucha', 'Dedenne', 'Goodra', 'Klefki', 'Trevenant', 'Gourgeist-Average', 'Avalugg', 'Noivern',
+    'Decidueye', 'Incineroar', 'Primarina', 'Toucannon', 'Crabominable', 'Lycanroc-Midday', 'Toxapex', 'Mudsdale',
+    'Araquanid', 'Salazzle', 'Tsareena', 'Oranguru', 'Passimian', 'Mimikyu', 'Drampa', 'Kommo-o', 'Corviknight', 'Flapple', 'Appletun',
+    'Sandaconda', 'Polteageist', 'Hatterene', 'Mr. Rime', 'Runerigus', 'Alcremie', 'Morpeko',
+    'Dragapult', 'Wyrdeer', 'Kleavor', 'Basculegion', 'Sneasler', 'Meowscarada', 'Skeledirge', 'Quaquaval',
+    'Maushold', 'Garganacl', 'Armarouge', 'Ceruledge', 'Bellibolt', 'Scovillain', 'Espathra', 'Tinkaton', 'Palafin', 'Orthworm',
+    'Glimmora', 'Farigiraf', 'Kingambit', 'Sinistcha', 'Archaludon', 'Hydrapple',
+    //Forms of initial Pokemon
+    'Mega Venusaur', 'Mega Charizard X', 'Mega Charizard Y', 'Mega Blastoise', 'Mega Beedrill', 'Mega Pidgeot', 'Raichu-Alola',
+    'Mega Clefable', 'Ninetales-Alola', 'Arcanine-Hisui', 'Mega Alakazam', 'Mega Victreebel', 'Mega Slowbro', 'Slowbro-Galar', 'Mega Gengar',
+    'Mega Kangaskhan', 'Mega Starmie', 'Mega Pinsir', 'Tauros-Paldea-Combat', 'Tauros-Paldea-Aqua', 'Tauros-Paldea-Blaze', 'Mega Gyarados', 'Mega Aerodactyl',
+    'Mega Dragonite', 'Mega Meganium', 'Typhlosion-Hisui', 'Mega Feraligatr', 'Mega Ampharos', 'Slowking-Galar', 'Mega Steelix', 'Mega Scizor',
+    'Mega Heracross', 'Mega Skarmory', 'Mega Houndoom', 'Mega Tyranitar', 'Mega Gardevoir', 'Mega Sableye', 'Mega Aggron',
+    'Mega Medicham', 'Mega Manectric', 'Mega Sharpedo', 'Mega Camerupt', 'Mega Altaria', 'Mega Banette', 'Mega Chimecho', 'Mega Absol', 'Mega Glalie',
+    'Mega Lopunny', 'Mega Garchomp', 'Mega Lucario', 'Mega Abomasnow', 'Mega Gallade',
+    'Mega Froslass', 'Rotom-Heat', 'Rotom-Wash', 'Rotom-Frost', 'Rotom-Fan', 'Rotom-Mow', 'Mega Emboar', 'Samurott-Hisui',
+    'Mega Excadrill', 'Mega Audino', 'Zoroark-Hisui', 'Mega Chandelure', 'Stunfisk-Galar', 'Mega Golurk', 'Mega Chesnaught', 'Mega Delphox',
+    'Mega Greninja', 'Mega Floette', 'Meowstic-F', 'Mega Meowstic', 'Aegislash-Shield', 'Aegislash-Blade',
+    'Mega Hawlucha', 'Goodra-Hisui', 'Gourgeist-Small', 'Gourgeist-Large', 'Gourgeist-Super', 'Avalugg-Hisui', 'Decidueye-Hisui', 'Mega Crabominable', 'Lycanroc-Midnight',
+    'Lycanroc-Dusk', 'Mega Drampa', 'Morpeko-Hangry', 'Basculegion-F', 'Maushold-Four', 'Mega Scovillain', 'Palafin-Hero', 'Mega Glimmora',
+    //Regulation M-B additions
+    'Vileplume', 'Qwilfish', 'Sceptile', 'Blaziken', 'Swampert', 'Mawile', 'Metagross', 'Staraptor', 'Musharna', 'Scolipede', 'Scrafty', 'Eelektross',
+    'Pyroar', 'Malamar', 'Barbaracle', 'Dragalge', 'Grimmsnarl', 'Falinks', 'Overqwil', 'Houndstone', 'Annihilape', 'Gholdengo',
+    //Forms of Regulation M-B additions
+    'Mega Raichu X', 'Mega Raichu Y', 'Mega Sceptile', 'Mega Blaziken', 'Mega Swampert', 'Mega Mawile', 'Mega Metagross', 'Mega Staraptor', 'Mega Scolipede',
+    'Mega Scrafty', 'Mega Eelektross', 'Mega Pyroar', 'Mega Malamar', 'Mega Barbaracle', 'Mega Dragalge', 'Mega Falinks',
+    //Regulation M-C additions
+    'Wigglytuff', 'Persian', "Farfetch'd", 'Mr. Mime', 'Swalot', 'Salamence', 'Gogoat', 'Golisopod', 'Rillaboom', 'Cinderace', 'Inteleon', 'Thievul', 'Toxtricity',
+    'Grapploct', 'Perrserker', "Sirfetch'd", 'Pincurchin', 'Indeedee', 'Pawmot', 'Arboliva', 'Squawkabilly', 'Mabosstiff', 'Baxcalibur',
+    //Forms of Regulation M-C additions
+    'Persian-Alola', 'Mega Absol Z', 'Mega Salamence', 'Mega Garchomp Z', 'Mega Lucario Z', 'Mega Golisopod', 'Indeedee-F', 'Mega Baxcalibur',
+].forEach(e => POKEDEX_CHAMPIONS[e] = POKEDEX_ZA_NATDEX[e]);
+
+//performs deep copy; necessary to preserve form data for nat dex
+POKEDEX_CHAMPIONS = $.extend(true, {}, POKEDEX_CHAMPIONS);

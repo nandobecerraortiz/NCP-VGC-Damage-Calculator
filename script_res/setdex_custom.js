@@ -93,7 +93,7 @@ function calcHiddenPower(ivs) {
 }
 
 //For games that standard competitive is played on
-for (var i = 1; i <= 9; i++) {
+for (var i = 1; i <= 10; i++) {
     if (localStorage["custom_gen_" + i] != null)
         ALL_SETDEX_CUSTOM[i] = JSON.parse(localStorage["custom_gen_" + i]);
     else
@@ -144,7 +144,7 @@ var savecustom = function (sidebarUsed = 0) {
         alert("Did you just try to stickbug the Damage Calc? lol");
         document.getElementById("customMon").value = "";
     }
-    else if (string.trim().indexOf('https://pokepast.es/') === 0) {
+    else if (string.trim().includes('pokepast.es/') && string.trim().indexOf('pokepast.es/') <= 8) {
         handleAjax(string.trim() + '/json')
             .done(function (data) {
                 var setGen = gen;
@@ -152,7 +152,10 @@ var savecustom = function (sidebarUsed = 0) {
                 if (data['title'].length && spreadName == 'My Custom Set')
                     spreadName = data['title'];
                 if (data['notes'].length && data['notes'].indexOf("Format: gen") == 0 && !isNaN(1 * data['notes'][11])) {
-                    if (isNaN(1 * data['notes'][12]))   //check for double digits
+                    if (data['notes'].includes("gen9champions")) {
+                        setGen = 10;
+                    }
+                    else if (isNaN(1 * data['notes'][12]))   //check for double digits
                         setGen = 1 * data['notes'][11];
                     else    //if this code is somehow still used when we reach gen 100 then y'all in the future can code it yourselves lol
                         setGen = 1 * (data['notes'][11] + data['notes'][12]);
@@ -188,6 +191,7 @@ function processSave(string, spreadName, sidebarUsed, setGen = gen) {
             var level = 50;
             var EVs = [0, 0, 0, 0, 0, 0];
             var IVs = [31, 31, 31, 31, 31, 31];
+            //var SPs = [0, 0, 0, 0, 0, 0];     //Showdown is using EVs for Stat Points right now. I'll keep this code commented out in case this changes.
             var nature = "Serious";
             var moves = [];
             var gmax_factor = false;
@@ -240,7 +244,15 @@ function processSave(string, spreadName, sidebarUsed, setGen = gen) {
             }
             if (checkPrimal != -1)
                 species = species.substring(0, checkPrimal);
-            if (species in showdownToCalcFormes) {
+
+            //will assume that Arceus/Silvally is holding the corresponding Plate/Z-Crystal/Memory; Hackmons is just outta luck
+            if (species.includes('Arceus-')) {
+                species = 'Arceus';
+            }
+            else if (species.includes('Silvally-')) {
+                species = 'Silvally';
+            }
+            else if (species in showdownToCalcFormes) {
                 species = showdownToCalcFormes[species];
             }
 
@@ -262,6 +274,28 @@ function processSave(string, spreadName, sidebarUsed, setGen = gen) {
                     if (lines[i].includes("Gigantamax: Yes")) {
                         gmax_factor = true;
                     }
+                    //Showdown is using EVs for Stat Points right now. I'll keep this code commented out in case this changes.
+                    //if (lines[i].indexOf("SPs") != -1) //if Stat Points are in this line
+                    //{
+                    //    statPointList = lines[i].split(':')[1].split('/'); //splitting it into a list of " # Stat "
+                    //    for (var j = 0; j < statPointList.length; ++j) {
+                    //        statPointList[j] = statPointList[j].trim();
+                    //        statPointListElements = statPointList[j].split(' ');
+                    //        if (statPointListElements[1] == "HP")
+                    //            SPs[0] = parseInt(statPointListElements[0])
+                    //        else if (statPointListElements[1] == "Atk")
+                    //            SPs[1] = parseInt(statPointListElements[0])
+                    //        else if (statPointListElements[1] == "Def")
+                    //            SPs[2] = parseInt(statPointListElements[0])
+                    //        else if (statPointListElements[1] == "SpA")
+                    //            SPs[3] = parseInt(statPointListElements[0])
+                    //        else if (statPointListElements[1] == "SpD")
+                    //            SPs[4] = parseInt(statPointListElements[0])
+                    //        else if (statPointListElements[1] == "Spe")
+                    //            SPs[5] = parseInt(statPointListElements[0])
+                    //    }
+
+                    //}
                     if (lines[i].indexOf("EVs") != -1) //if EVs are in this line
                     {
                         evList = lines[i].split(':')[1].split('/'); //splitting it into a list of " # Stat "
@@ -355,29 +389,47 @@ function processSave(string, spreadName, sidebarUsed, setGen = gen) {
           }
           */
 
-
-            customFormat = {
-                "level": level,
-                "evs": {
-                    "hp": EVs[0],
-                    "at": EVs[1],
-                    "df": EVs[2],
-                    "sa": EVs[3],
-                    "sd": EVs[4],
-                    "sp": EVs[5],
-                },
-                "ivs": {
-                    "hp": IVs[0],
-                    "at": IVs[1],
-                    "df": IVs[2],
-                    "sa": IVs[3],
-                    "sd": IVs[4],
-                    "sp": IVs[5],
-                },
-                "nature": nature,
-                "ability": ability,
-                "item": item,
-                "moves": moves,
+            if (gen == 10) {
+                customFormat = {
+                    "level": level,
+                    "sps": {
+                        "hp": EVs[0],
+                        "at": EVs[1],
+                        "df": EVs[2],
+                        "sa": EVs[3],
+                        "sd": EVs[4],
+                        "sp": EVs[5],
+                    },
+                    "nature": nature,
+                    "ability": ability,
+                    "item": item,
+                    "moves": moves,
+                };
+            }
+            else {
+                customFormat = {
+                    "level": level,
+                    "evs": {
+                        "hp": EVs[0],
+                        "at": EVs[1],
+                        "df": EVs[2],
+                        "sa": EVs[3],
+                        "sd": EVs[4],
+                        "sp": EVs[5],
+                    },
+                    "ivs": {
+                        "hp": IVs[0],
+                        "at": IVs[1],
+                        "df": IVs[2],
+                        "sa": IVs[3],
+                        "sd": IVs[4],
+                        "sp": IVs[5],
+                    },
+                    "nature": nature,
+                    "ability": ability,
+                    "item": item,
+                    "moves": moves,
+                };
             }
             if (setGen == 9)
                 customFormat["tera_type"] = tera_type;
@@ -453,29 +505,48 @@ var savecalc = function (set, spreadName, p, species) {
 
     if (spreadName == '')
         spreadName = "My Calc Set";
-    customFormat = {
-        "level": set.level,
-        "evs": {
-            "hp": set.HPEVs,
-            "at": set.evs[STATS[0]],
-            "df": set.evs[STATS[1]],
-            "sa": set.evs[STATS[2]],
-            "sd": set.evs[STATS[3]],
-            "sp": set.evs[STATS[4]],
-        },
-        "ivs": {
-            "hp": set.HPIVs,
-            "at": set.ivs[STATS[0]],
-            "df": set.ivs[STATS[1]],
-            "sa": set.ivs[STATS[2]],
-            "sd": set.ivs[STATS[3]],
-            "sp": set.ivs[STATS[4]],
-        },
-        "nature": set.nature,
-        "ability": needsBaseAb ? saveBaseAb[p.substring(1)] : set.ability,
-        "item": set.item,
-        "moves": moves,
-    };
+    if (gen == 10) {
+        customFormat = {
+            "level": set.level,
+            "sps": {
+                "hp": set.HPSPs,
+                "at": set.sps[STATS[0]],
+                "df": set.sps[STATS[1]],
+                "sa": set.sps[STATS[2]],
+                "sd": set.sps[STATS[3]],
+                "sp": set.sps[STATS[4]],
+            },
+            "nature": set.nature,
+            "ability": needsBaseAb ? saveBaseAb[p.substring(1)] : set.ability,
+            "item": set.item,
+            "moves": moves,
+        };
+    }
+    else {
+        customFormat = {
+            "level": set.level,
+            "evs": {
+                "hp": set.HPEVs,
+                "at": set.evs[STATS[0]],
+                "df": set.evs[STATS[1]],
+                "sa": set.evs[STATS[2]],
+                "sd": set.evs[STATS[3]],
+                "sp": set.evs[STATS[4]],
+            },
+            "ivs": {
+                "hp": set.HPIVs,
+                "at": set.ivs[STATS[0]],
+                "df": set.ivs[STATS[1]],
+                "sa": set.ivs[STATS[2]],
+                "sd": set.ivs[STATS[3]],
+                "sp": set.ivs[STATS[4]],
+            },
+            "nature": set.nature,
+            "ability": needsBaseAb ? saveBaseAb[p.substring(1)] : set.ability,
+            "item": set.item,
+            "moves": moves,
+        };
+    }
     if (gen == 9)
         customFormat["tera_type"] = set.tera_type;
     else if (gen == 8 && GMAX_LIST.includes(species)) {
@@ -563,6 +634,28 @@ var exportset = function (set) {
     else
         exTera = "";
 
+    exSPs = "";
+    exEVs = "";
+    if (gen == 10) {
+        var HPSPs = set.HPSPs != undefined ? set.HPSPs : set.sps["hp"] != undefined ? set.sps["hp"] : -1;
+        hasSPs = false;
+        if (HPSPs) {
+            hasSPs = true;
+            exSPs = exSPs + HPSPs.toString() + " HP ";
+        }
+        tempStatDict = { at: " Atk ", df: " Def ", sa: " SpA ", sd: " SpD ", sp: " Spe " };
+        for (statName of STATS) {
+            if (set.sps[statName]) {
+                if (hasSPs)
+                    exSPs = exSPs + "/ ";
+                exSPs = exSPs + set.sps[statName].toString() + tempStatDict[statName];
+                hasSPs = true;
+            }
+        }
+        if (hasSPs) {
+            exSPs = "EVs: " + exSPs + "\n";
+        }
+    }
     //MORE OPTIMAL VERSION OF EV EXPORT IF READABILITY ISN'T A CONCERN
     //
     //exEVs = "EVs: " + set.HPEVs.toString() + " HP / " +
@@ -571,48 +664,48 @@ var exportset = function (set) {
     //    set.evs[STATS[2]].toString() + " SpA / " +
     //    set.evs[STATS[3]].toString() + " SpD / " +
     //    set.evs[STATS[4]].toString() + " Spe ";
+    else {
+        var HPEVs = set.HPEVs != undefined ? set.HPEVs : set.evs["hp"] != undefined ? set.evs["hp"] : -1;
+        var HPIVs = set.HPIVs != undefined ? set.HPIVs : set.ivs["hp"] != undefined ? set.ivs["hp"] : -1;
 
-    var HPEVs = set.HPEVs != undefined ? set.HPEVs : set.evs["hp"] != undefined ? set.evs["hp"] : -1;
-    var HPIVs = set.HPIVs != undefined ? set.HPIVs : set.ivs["hp"] != undefined ? set.ivs["hp"] : -1;
-
-    exEVs = "";
-    hasEVs = false;
-    if (HPEVs) {
-        hasEVs = true;
-        exEVs = exEVs + HPEVs.toString() + " HP ";
-    }
-    if (set.evs[STATS[0]]) {
-        if (hasEVs)
-            exEVs = exEVs + "/ ";
-        exEVs = exEVs + set.evs[STATS[0]].toString() + " Atk ";
-        hasEVs = true;
-    }
-    if (set.evs[STATS[1]]) {
-        if (hasEVs)
-            exEVs = exEVs + "/ ";
-        exEVs = exEVs + set.evs[STATS[1]].toString() + " Def ";
-        hasEVs = true;
-    }
-    if (set.evs[STATS[2]]) {
-        if (hasEVs)
-            exEVs = exEVs + "/ ";
-        exEVs = exEVs + set.evs[STATS[2]].toString() + " SpA ";
-        hasEVs = true;
-    }
-    if (set.evs[STATS[3]]) {
-        if (hasEVs)
-            exEVs = exEVs + "/ ";
-        exEVs = exEVs + set.evs[STATS[3]].toString() + " SpD ";
-        hasEVs = true;
-    }
-    if (set.evs[STATS[4]]) {
-        if (hasEVs)
-            exEVs = exEVs + "/ ";
-        exEVs = exEVs + set.evs[STATS[4]].toString() + " Spe ";
-        hasEVs = true;
-    }
-    if (hasEVs) {
-        exEVs = "EVs: " + exEVs + "\n";
+        hasEVs = false;
+        if (HPEVs) {
+            hasEVs = true;
+            exEVs = exEVs + HPEVs.toString() + " HP ";
+        }
+        if (set.evs[STATS[0]]) {
+            if (hasEVs)
+                exEVs = exEVs + "/ ";
+            exEVs = exEVs + set.evs[STATS[0]].toString() + " Atk ";
+            hasEVs = true;
+        }
+        if (set.evs[STATS[1]]) {
+            if (hasEVs)
+                exEVs = exEVs + "/ ";
+            exEVs = exEVs + set.evs[STATS[1]].toString() + " Def ";
+            hasEVs = true;
+        }
+        if (set.evs[STATS[2]]) {
+            if (hasEVs)
+                exEVs = exEVs + "/ ";
+            exEVs = exEVs + set.evs[STATS[2]].toString() + " SpA ";
+            hasEVs = true;
+        }
+        if (set.evs[STATS[3]]) {
+            if (hasEVs)
+                exEVs = exEVs + "/ ";
+            exEVs = exEVs + set.evs[STATS[3]].toString() + " SpD ";
+            hasEVs = true;
+        }
+        if (set.evs[STATS[4]]) {
+            if (hasEVs)
+                exEVs = exEVs + "/ ";
+            exEVs = exEVs + set.evs[STATS[4]].toString() + " Spe ";
+            hasEVs = true;
+        }
+        if (hasEVs) {
+            exEVs = "EVs: " + exEVs + "\n";
+        }
     }
     exNature = set.nature + " Nature\n";
 
@@ -624,45 +717,46 @@ var exportset = function (set) {
     //    accessIVs.find(".sa .ivs").val().toString() + " SpA / " +
     //    accessIVs.find(".sd .ivs").val().toString() + " SpD / " +
     //    accessIVs.find(".sp .ivs").val().toString() + " Spe ";
-
     exIVs = "";
-    hasIVs = false;
-    if (HPIVs != 31) {
-        hasIVs = true;
-        exIVs = exIVs + HPIVs.toString() + " HP ";
-    }
-    if (set.ivs[STATS[0]] != 31) {
-        if (hasIVs)
-            exIVs = exIVs + "/ ";
-        exIVs = exIVs + set.ivs[STATS[0]].toString() + " Atk ";
-        hasIVs = true;
-    }
-    if (set.ivs[STATS[1]] != 31) {
-        if (hasIVs)
-            exIVs = exIVs + "/ ";
-        exIVs = exIVs + set.ivs[STATS[1]].toString() + " Def ";
-        hasIVs = true;
-    }
-    if (set.ivs[STATS[2]] != 31) {
-        if (hasIVs)
-            exIVs = exIVs + "/ ";
-        exIVs = exIVs + set.ivs[STATS[2]].toString() + " SpA ";
-        hasIVs = true;
-    }
-    if (set.ivs[STATS[3]] != 31) {
-        if (hasIVs)
-            exIVs = exIVs + "/ ";
-        exIVs = exIVs + set.ivs[STATS[3]].toString() + " SpD ";
-        hasIVs = true;
-    }
-    if (set.ivs[STATS[4]] != 31) {
-        if (hasIVs)
-            exIVs = exIVs + "/ ";
-        exIVs = exIVs + set.ivs[STATS[4]].toString() + " Spe ";
-        hasIVs = true;
-    }
-    if (hasIVs) {
-        exIVs = "IVs: " + exIVs + "\n";
+    if (gen < 10) {
+        hasIVs = false;
+        if (HPIVs != 31) {
+            hasIVs = true;
+            exIVs = exIVs + HPIVs.toString() + " HP ";
+        }
+        if (set.ivs[STATS[0]] != 31) {
+            if (hasIVs)
+                exIVs = exIVs + "/ ";
+            exIVs = exIVs + set.ivs[STATS[0]].toString() + " Atk ";
+            hasIVs = true;
+        }
+        if (set.ivs[STATS[1]] != 31) {
+            if (hasIVs)
+                exIVs = exIVs + "/ ";
+            exIVs = exIVs + set.ivs[STATS[1]].toString() + " Def ";
+            hasIVs = true;
+        }
+        if (set.ivs[STATS[2]] != 31) {
+            if (hasIVs)
+                exIVs = exIVs + "/ ";
+            exIVs = exIVs + set.ivs[STATS[2]].toString() + " SpA ";
+            hasIVs = true;
+        }
+        if (set.ivs[STATS[3]] != 31) {
+            if (hasIVs)
+                exIVs = exIVs + "/ ";
+            exIVs = exIVs + set.ivs[STATS[3]].toString() + " SpD ";
+            hasIVs = true;
+        }
+        if (set.ivs[STATS[4]] != 31) {
+            if (hasIVs)
+                exIVs = exIVs + "/ ";
+            exIVs = exIVs + set.ivs[STATS[4]].toString() + " Spe ";
+            hasIVs = true;
+        }
+        if (hasIVs) {
+            exIVs = "IVs: " + exIVs + "\n";
+        }
     }
     exMoveset = "";
     for (i = 0; i < exMoves.length; i++) {
@@ -673,7 +767,7 @@ var exportset = function (set) {
 
     exSpeciesAndItem = exSpecies + exItem + "\n";
 
-    exportText = exSpeciesAndItem + exAbility + exLevel + exTera + exEVs + exNature + exIVs + exMoveset;
+    exportText = exSpeciesAndItem + exAbility + exLevel + exTera + exSPs + exEVs + exNature + exIVs + exMoveset + "\n";
     return exportText;
 }
 
@@ -681,6 +775,9 @@ function runExportSet(pnum) {
     var set = new Pokemon($('#p' + pnum));
     var tempName = $('#p' + pnum + ' input.set-selector').val();
     set.name = tempName.substring(0, tempName.indexOf(" ("));
+    if($('#p' + pnum).find('.forme').is(':visible') && saveBaseAb['p' + pnum] != ''){
+        set.ability = saveBaseAb['p' + pnum];
+    }
     var exportText = exportset(set);
     Clipboard_CopyTo(exportText);
     //tempCSV();
@@ -709,6 +806,7 @@ function storedSetFixes() {
     var nameChange = {
         'Indeedee-M': 'Indeedee',
         'Dudunsparce-Big': 'Dudunsparce-Three-Segment',
+        'Gimmighoul-Roam': 'Gimmighoul-Roaming',
     };
     var nameChangeItemRequired = {
         'Zacian': {

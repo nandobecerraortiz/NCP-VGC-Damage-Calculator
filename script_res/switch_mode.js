@@ -21,7 +21,7 @@ if (localStorage.getItem("dex") == "natdex") {
 
 //LEVEL TOGGLING
 //Load the leveling system according to localStorage
-if (localStorage.getItem("level") == true) {
+if (localStorage.getItem("level") == "true") {
 	$("#douswitch").prop("checked", false);
 }
 
@@ -80,14 +80,26 @@ $(function(){
 	});
 
 	//GEN 7 SET TEMP
-	$("#gen7sets").on("click", function () {
+	$("#WIPsets").on("click", function () {
 		if ($(this).is(":checked")) {
 			COMPONENTS[7][0] = SETDEX_TT2019;
-			tempSetName = "Abomasnow (Default Set)";
+			COMPONENTS[6][0] = SETDEX_SHOWDOWN;
+			if (gen == 7) {
+				tempSetName = "Abomasnow (Default Set)";
+			}
+			else if (gen == 6) {
+				tempSetName = "Abomasnow (Common Showdown)";
+			}
 		}
 		else {
 			COMPONENTS[7][0] = SETDEX_GEN7;
-			tempSetName = "Abomasnow (Mega Hard TR)";		//Yes tempSetName is lazy but it's only temporary so it's fine
+			COMPONENTS[6][0] = SETDEX_GEN6;
+			if (gen == 7) {
+				tempSetName = "Abomasnow (Mega Hard TR)";		//Yes tempSetName is lazy but it's only temporary so it's fine
+			}
+			else if (gen == 6) {
+				tempSetName = "Abomasnow (Mixed Slow Mega)";
+			}
 		}
 		loadSetdexScript();
 		if (!$("#p1" + " .set-toggle").prop("checked"))
@@ -163,27 +175,41 @@ function loadSVColors(theme) {																    //
 
 function loadDex(dexMode) {
 	if (dexMode === "natdex") {
-		if (gen === 9) {
-			pokedex = POKEDEX_SV_NATDEX;
-			moves = MOVES_SV_NATDEX;
-			items = ITEMS_SV_NATDEX;
-		}
-		else {
-			pokedex = POKEDEX_SS_NATDEX;
-			moves = MOVES_SS_NATDEX;
-			items = ITEMS_SS_NATDEX;
+		switch (gen) {
+			case 8: //Gen 8 SwSh+BDSP
+				pokedex = POKEDEX_SS_NATDEX;
+				moves = MOVES_SS_NATDEX;
+				items = ITEMS_SS_NATDEX;
+				break;
+			case 9: //Gen 9 SV
+				pokedex = POKEDEX_SV_NATDEX;
+				moves = MOVES_SV_NATDEX;
+				items = ITEMS_SV_NATDEX;
+				break;
+			case 10: //Champions
+				pokedex = POKEDEX_ZA_NATDEX;
+				moves = MOVES_CHAMPIONS_NATDEX;
+				items = ITEMS_ZA_NATDEX;
+				abilities = ABILITIES_CHAMPIONS_NATDEX;
 		}
 	}
 	else {
-		if (gen === 9) {
-			pokedex = POKEDEX_SV;
-			moves = MOVES_SV;
-			items = ITEMS_SV;
-		}
-		else {
-			pokedex = POKEDEX_SS;
-			moves = MOVES_SS;
-			items = ITEMS_SS;
+		switch (gen) {
+			case 8: //Gen 8 SwSh+BDSP
+				pokedex = POKEDEX_SS;
+				moves = MOVES_SS;
+				items = ITEMS_SS;
+				break;
+			case 9: //Gen 9 SV
+				pokedex = POKEDEX_SV;
+				moves = MOVES_SV;
+				items = ITEMS_SV;
+				break;
+			case 10: //Champions
+				pokedex = POKEDEX_CHAMPIONS;
+				moves = MOVES_CHAMPIONS;
+				items = ITEMS_CHAMPIONS;
+				abilities = ABILITIES_CHAMPIONS;
 		}
 	}
 
@@ -200,33 +226,30 @@ function loadDex(dexMode) {
 		}
 	}
 	if (gen >= 8) {
-		if (localStorage.getItem("dex") == "vgcdex") {
-			for (i = 1; i <= 4; i++) {
-				$('label[for="zL' + i + '"]').show();
-				$('label[for="zR' + i + '"]').show();
+		if (dexMode == "natdex") {
+			$(".natdex-specific.n" + gen).show();
+			if (gen == 10) {
+				$('div #temp-fairyaura').hide();
 			}
-			$('div #primal-weather').show();
 		}
 		else {
-			for (i = 1; i <= 4; i++) {
-				$('label[for="zL' + i + '"]').hide();
-				$('label[for="zR' + i + '"]').hide();
+			$(".natdex-specific.n" + gen).hide();
+			if (gen == 10) {
+				$('div #temp-fairyaura').show();
 			}
-			$('div #primal-weather').hide();
 		}
 	}
-	if (gen >= 9) {
-		if (localStorage.getItem("dex") == "vgcdex") {
-			$('div #auras').show();
-			$('div #protect-field').show();
-			$('div #flower-gift').show();
-		}
-		else {
-			$('div #auras').hide();
-			$('div #protect-field').hide();
-			$('div #flower-gift').hide();
-		}
+	if ($('div #temp-fairyaura').is(':visible')) {
+		$('label[for="fairy-aura"]').removeClass('btn-mid');
+		$('label[for="aura-break"]').hide();
+		$('label[for="dark-aura"]').hide();
 	}
+	else {
+		$('label[for="fairy-aura"]').addClass('btn-mid');
+		$('label[for="aura-break"]').show();
+		$('label[for="dark-aura"]').show();
+	}
+
 	if (typeChart !== undefined) {
 		var types = Object.keys(typeChart);
 		if (types.indexOf('Typeless') !== -1)
@@ -266,4 +289,18 @@ function toggleAFD() {
 		localStorage.removeItem("isAFD");
 		alert("April Fools' Day mode deactivated. Refresh to see the change.");
     }
+}
+
+var resultDisplayMode = 'SPs';
+function toggleResultDisplay(displayChoice) {
+	localStorage.setItem('toggleResultDisplay', displayChoice);
+	resultDisplayMode = displayChoice;
+}
+
+function setResultDisplay() {
+	let storedResultDisplay = localStorage.getItem('toggleResultDisplay');
+	if (storedResultDisplay) {
+		$("#toggleResult").val(storedResultDisplay);
+		resultDisplayMode = storedResultDisplay;
+	}
 }
